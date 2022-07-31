@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <PackOnBuild>true</PackOnBuild>
+    <PackageVersion>1.0.1</PackageVersion>
+    <Authors>pwf</Authors>
+    <Title>Pwf PaySDK</Title>
+    <Description>Pwf PaySDK for .NET allows you to quickly access the various capabilities of the Pwf Open Platform.</Description>
+    <PackageId>PwfPaySDK</PackageId>
+    <RootNamespace>Pwf.PaySDK</RootNamespace>
+    <PackageProjectUrl>https://github.com/pwfcom/pwf-paysdk-for-net</PackageProjectUrl>
+    <Summary>Pwf PaySDK for .NET allows you to quickly access the various capabilities of the Pwf Open Platform.</Summary>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Class1.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Base\" />
+    <Folder Include="Http\" />
+    <Folder Include="Api\" />
+    <Folder Include="Api\Response\" />
+    <Folder Include="Base\Attributes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
+  </ItemGroup>
+</Project>
