@@ -5,7 +5,7 @@ Pwf PaySDK for .NET讓您不用複雜編程即可訪Pwf開放平台開放的各�
 ## 環境要求
 1. Pwf PaySDK for .NET基於`.Net Standard 2.0`開發，支持`.Net Framework 4.6.1`、.`Net Core 2.0`及其以上版本
 
-2. 使用 Pwf PaySDK for .NET 之前 ，您需要先前往[Pwf平台-開發者中心](https://pwf.com)完成開發者接入的一些準備工作，包括創建應用、為應用添加功能包、設置應用的接口加簽方式等。
+2. 使用 Pwf PaySDK for .NET 之前 ，您需要先前往 https://pwf.com 申請開通賬號並完成開發者接入的一些準備工作，包括創建應用、為應用設置接口相關配置等。
 
 3. 準備工作完成後，注意保存如下信息，後續將作為使用SDK的輸入。
 
