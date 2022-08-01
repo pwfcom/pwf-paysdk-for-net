@@ -48,7 +48,6 @@ namespace SDKDemo
             {
                 Dictionary<string, object> Params = new Dictionary<string, object>();
                 Params.Add("trade_name", "trade_name");
-                Params.Add("pay_type", 1);
                 Params.Add("fiat_currency", "EUR");
                 Params.Add("fiat_amount", 0.01);
                 Params.Add("out_trade_no", "order-100");
