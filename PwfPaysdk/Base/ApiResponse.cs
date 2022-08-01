@@ -25,10 +25,11 @@ namespace Pwf.PaySDK.Base
 
 		public void SetResponseBody(string responseBody)
 		{
-            if (!String.IsNullOrEmpty(responseBody ))
+			//Console.WriteLine("responseBody : " + responseBody);
+			if (!String.IsNullOrEmpty(responseBody ))
             {
-				dataMap = JsonConvert.DeserializeObject<Dictionary<string, object>>(responseBody);
-				Bean = DictionaryUtil.ToObject<ApiResponseBean>(dataMap);
+				Dictionary<string, object> beanMap = JsonConvert.DeserializeObject<Dictionary<string, object>>(responseBody);
+				Bean = DictionaryUtil.ToObject<ApiResponseBean>(beanMap);
 			}
             else
             {
@@ -48,10 +49,12 @@ namespace Pwf.PaySDK.Base
 		public bool Verify()
         {
 			string decryptData = _kernel.DecryptResponseData(GetDataString());
-			Dictionary<string, object> dataMap = JsonConvert.DeserializeObject<Dictionary<string, object>>(decryptData);
+			//Console.WriteLine("decryptData : " + decryptData);
+			Dictionary<string, object> decryptDataMap = JsonConvert.DeserializeObject<Dictionary<string, object>>(decryptData);
 
-			if (dataMap != null && _kernel.Verify(dataMap))
+			if (decryptDataMap != null && _kernel.Verify(decryptDataMap))
 			{
+				this.dataMap = decryptDataMap;
 				return true;
 			}
 

@@ -43,7 +43,6 @@ namespace Pwf.PaySDK.Base
 
             IDictionary<string, object> sortedMap = DictionaryUtil.GetSortedMap (Params);
             string paramsJsonString = DictionaryUtil.ToJsonString(sortedMap);
-
             string encrypted = RSAEncryptorUtil.DoEncrypt(paramsJsonString, CHARSET_UTF8, pwfPublicKey);
 
             Dictionary<string, object> postBodyParams = new Dictionary<string, object>();
@@ -88,7 +87,7 @@ namespace Pwf.PaySDK.Base
             while (dem.MoveNext())
             {
                 string key = dem.Current.Key;
-                string value = (string)dem.Current.Value;
+                string value = Convert.ToString(dem.Current.Value);
                 if (!string.IsNullOrEmpty(key) && !string.IsNullOrEmpty(value))
                 {
                     query.Append(key).Append("=").Append(value).Append("&");

@@ -15,7 +15,7 @@ namespace Pwf.PaySDK.Api.Response
         public int status { get; set; }
 
         [NameInMap("pay_at")]
-        public int pay_at { get; set; }
+        public string pay_at { get; set; }
 
         [NameInMap("fiat_currency")]
         public string fiat_currency { get; set; }
