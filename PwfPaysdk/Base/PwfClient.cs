@@ -9,7 +9,7 @@ using System;
 namespace Pwf.PaySDK.Base
 {
 
-    public class Kernel
+    public class PwfClient
     {
 
         private readonly static Encoding DEFAULT_CHARSET = Encoding.UTF8;
@@ -20,7 +20,7 @@ namespace Pwf.PaySDK.Base
         private readonly string merchantPrivateKey;
         private readonly string pwfPublicKey;
 
-        public Kernel(Config options)
+        public PwfClient(Config options)
         {
             config = DictionaryUtil.ToMap(options);
 
@@ -72,9 +72,30 @@ namespace Pwf.PaySDK.Base
         }
 
 
-        public HttpResponse Execute(HttpRequest request)
+        public ApiResponse Execute(string pathname, Dictionary<string, object> parameters)
         {
-            return HttpClientUtil.Execute(request);
+
+            HttpRequest request = new HttpRequest()
+            {
+                Host = GetConfig("ApiUrl"),
+                Method = "POST",
+                Pathname = pathname,
+                Body = BuildPostRequestBody(parameters),
+                Headers = new Dictionary<string, string>{
+                        {"content-type", "application/json;charset=utf-8"},
+                }
+            };
+
+            HttpResponse response = HttpClientUtil.Execute(request);
+            string responseBody = HttpClientUtil.GetResponseBody(response);
+            return GetApiResponse(responseBody);
+        }
+
+        public ApiResponse GetApiResponse(string responseJson)
+        {
+            ApiResponse apiResponse = new ApiResponse(this);
+            apiResponse.SetResponseBody(responseJson);
+            return apiResponse;
         }
 
         public static string GetSignContent(IDictionary<string, object> parameters)
@@ -109,19 +130,6 @@ namespace Pwf.PaySDK.Base
         public string DecryptResponseData(string data)
         {
             return RSAEncryptorUtil.DoDecrypt(data, CHARSET_UTF8,merchantPrivateKey);
-        }
-
-        public ApiResponse GetApiResponse(HttpResponse response)
-        {
-            string responseBody = HttpClientUtil.GetResponseBody(response);
-            return GetApiResponseFromJsonString(responseBody);
-        }
-
-        public ApiResponse GetApiResponseFromJsonString(string responseJson)
-        {
-            ApiResponse apiResponse = new ApiResponse(this);
-            apiResponse.SetResponseBody(responseJson);
-            return apiResponse;
         }
     }
 }

@@ -29,10 +29,6 @@ Pwf PaySDK for .NET讓您不用複雜編程即可訪Pwf開放平台開放的各�
 ```charp
 using Pwf.PaySDK.Base;
 
-using Pwf.PaySDK.Api.Response;
-using System.Collections.Generic;
-
-
 namespace SDKDemo
 {
     class Program
@@ -42,8 +38,9 @@ namespace SDKDemo
             
 
             Config config = GetConfig();
-           
-            ApiClient.SetOptions(config);
+            PwfClient pwfClient = new PwfClient(config);
+
+            //订单支付請求接口業務參數
             try
             {
                 Dictionary<string, object> Params = new Dictionary<string, object>();
@@ -58,15 +55,51 @@ namespace SDKDemo
                 Params.Add("merchant_no", config.MerchantNo);
                 Params.Add("notify_url", config.NotifyUrl);
 
-                WalletPayAddressResponse response = ApiClient.Wallet().PayAddress(Params);
+                ApiResponse resonpse = pwfClient.Execute("/api/v2/wallet/payAddress", Params);
 
-                Console.WriteLine("返回：" + response.ToString());
+                if (resonpse.IsSuccess())
+                {
+                    if (resonpse.Verify())
+                    {
+                        Dictionary<string, object> ss = resonpse.GetDataMap();
+                        foreach (var dic in ss)
+                        {
+                            Console.WriteLine("Output Key : {0}, Value : {1} ", dic.Key, Convert.ToString(dic.Value));
+                        }
+                    }
+                    else
+                    {
+                        throw new PwfError("the signature check fails, please check whether the Pwf platform public key or merchant private key is configured correctly.");
+                    }
+                }
+                else
+                {
+                    throw new PwfError(resonpse.GetRet() + ":" + resonpse.GetMsg());
+                }
 
             }
             catch (Exception ex)
             {
                 Console.WriteLine("调用遭遇异常，原因：" + ex);
    
+            }
+
+            //異步回調
+             string json_string = "{\"ret\":1000,\"lang\":\"CN\",\"msg\":\"\\u8bf7\\u6c42\\u6210\\u529f\",\"data\":\"........"}";
+
+            ApiResponse resonpse = pwfClient.GetApiResponse(json_string);
+            if (resonpse.IsSuccess())
+            {
+                if (resonpse.Verify())
+                {
+                    Dictionary<string, object> ss = resonpse.GetDataMap();
+                    foreach (var dic in ss)
+                    {
+                        Console.WriteLine("Output Key : {0}, Value : {1} ", dic.Key, Convert.ToString(dic.Value));
+                    }
+                }else{
+                    throw new PwfError("the signature check fails, please check whether the Pwf platform public key or merchant private key is configured correctly.");
+                }
             }
         }
 
@@ -77,8 +110,7 @@ namespace SDKDemo
             {
                 ApiUrl = "<-- 請填寫平台分配的接口域名，例如：https://xxx.pwf.com/ -->",
                 AppToken = "<-- 請填寫您的appToken，例如：377b26eb8c25bd... -->",
-                MerchantNo = "<-- 請填寫您的商戶號，例如：202207...964 -->",
-
+ 
                 Lang = "TC",//語系(參考文檔中最下方語系表，如:TC)
 
                 MerchantPrivateCertPath = "<-- 請填寫您的應用私鑰路徑，例如：/foo/MyPrivateKey.pem -->",

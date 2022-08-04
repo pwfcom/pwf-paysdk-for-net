@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using Pwf.PaySDK.Http;
 using Pwf.PaySDK.Util;
 
 namespace Pwf.PaySDK.Base
@@ -11,13 +10,13 @@ namespace Pwf.PaySDK.Base
 
 		public const int SUCCESS_CODE = 1000;
 
-		private Kernel _kernel;
+		private PwfClient _kernel;
 
 		public Dictionary<string, object> dataMap;
 
 		private ApiResponseBean Bean { get; set; }
 
-		public ApiResponse(Kernel context)
+		public ApiResponse(PwfClient context)
 		{
 			_kernel = context;
 			dataMap = new Dictionary<string, object>();
