@@ -52,7 +52,7 @@ namespace SDKDemo
                 Params.Add("timestamp", 1657895835);
                 Params.Add("return_url", "https://www.return.com/return");
                 Params.Add("collection_model", 1);
-                Params.Add("merchant_no", config.MerchantNo);
+                Params.Add("merchant_no", "2022072091622963");
                 Params.Add("notify_url", config.NotifyUrl);
 
                 ApiResponse resonpse = pwfClient.Execute("/api/v2/wallet/payAddress", Params);
