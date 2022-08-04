@@ -84,7 +84,7 @@ namespace SDKDemo
    
             }
 
-            //異步回調
+            //處理異步回調通知例子
              string json_string = "{\"ret\":1000,\"lang\":\"CN\",\"msg\":\"\\u8bf7\\u6c42\\u6210\\u529f\",\"data\":\"........"}";
 
             ApiResponse resonpse = pwfClient.GetApiResponse(json_string);
