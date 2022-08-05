@@ -24,16 +24,22 @@ namespace Pwf.PaySDK.Base
 
 		public void SetResponseBody(string responseBody)
 		{
-			//Console.WriteLine("responseBody : " + responseBody);
+			Console.WriteLine("responseBody : " + responseBody);
 			if (!String.IsNullOrEmpty(responseBody ))
             {
-				Dictionary<string, object> beanMap = JsonConvert.DeserializeObject<Dictionary<string, object>>(responseBody);
-				Bean = DictionaryUtil.ToObject<ApiResponseBean>(beanMap);
+                try
+                {
+					Dictionary<string, object> beanMap = JsonConvert.DeserializeObject<Dictionary<string, object>>(responseBody);
+					Bean = DictionaryUtil.ToObject<ApiResponseBean>(beanMap);
+				} catch ( JsonReaderException e) {
+					throw new PwfError("Invalid json format: " + e.Message);
+				}
+
 			}
             else
             {
 				throw new PwfError("no response returned");
-			}	
+			}
 		}
 
 		public bool IsSuccess()
