@@ -51,9 +51,10 @@ namespace SDKDemo
                 Params.Add("subject", "order-test");
                 Params.Add("timestamp", 1657895835);
                 Params.Add("return_url", "https://www.return.com/return");
+                Params.Add("notify_url", "https://www.notify.com/notify"); //此處的異步回調通知地址需與商戶中心配置的異步通知地址一致
                 Params.Add("collection_model", 1);
-                Params.Add("merchant_no", "2022072091622963");
-                Params.Add("notify_url", config.NotifyUrl);
+                Params.Add("merchant_no", "<-- 請填寫您的商戶號，例如：2022......81170 -->");
+                
 
                 ApiResponse resonpse = pwfClient.Execute("/api/v2/wallet/payAddress", Params);
 
@@ -114,8 +115,7 @@ namespace SDKDemo
                 Lang = "TC",//語系(參考文檔中最下方語系表，如:TC)
 
                 MerchantPrivateCertPath = "<-- 請填寫您的應用私鑰路徑，例如：/foo/MyPrivateKey.pem -->",
-                PwfPublicCertPath = "<-- 請填寫PWF平台公鑰證書文件路徑，例如：/foo/PwfPublicKey.pem -->",
-                NotifyUrl = "<-- 請填寫您的異步通知接收服務地址，例如：https://www.notify.com/notify -->"
+                PwfPublicCertPath = "<-- 請填寫PWF平台公鑰證書文件路徑，例如：/foo/PwfPublicKey.pem -->"
             };
         }
 
